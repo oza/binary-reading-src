@@ -23,7 +23,6 @@ struct elf_info{
 
 struct program_info{
 	u32 base;
-	u32	name_index;
 	u32	vaddr;
 	u32	offset;
 	u32	header_num;
@@ -32,6 +31,7 @@ struct program_info{
 struct section_info{
 	u32 base;
 	u32 name_index;
+	u32	vaddr;
 	u32	offset;
 	u32	header_num;
 };
@@ -142,9 +142,41 @@ bool parse_program_header(FILE *file, struct program_info *p_info )
 	return false;
 }
 
-bool parse_section_header(FILE *file, struct program_info *p_info )
+bool parse_section_header(FILE *file, struct section_info *s_info )
 {
-		
+	int i;
+	// FIXME please specify the offset.
+	u32 ph_size = 40;
+	u32 name_index_offset = 0 + s_info->base;
+	u32 vaddr_offset = 12 + s_info->base;
+	u32 off_offset = 16 + s_info->base;
+
+	printf("************************************\n");
+	printf("     vaddr     offset\n");
+	for( i = 0 ; i < s_info->header_num ; ++i ){
+		fseek( file, vaddr_offset, SEEK_SET );
+		fread(&s_info->vaddr,sizeof(u32),1,file);
+	
+		fseek( file, off_offset, SEEK_SET );
+		fread(&s_info->offset,sizeof(u32),1,file);
+	
+		printf("%10lx %10lx\n",
+			s_info->vaddr,
+			s_info->offset);
+
+		// update
+		vaddr_offset += ph_size;
+		//name_index_offset += ph_size;
+		off_offset += ph_size;
+	}
+	printf("************************************\n");
+
+	if ( s_info->vaddr
+		//&& s_info->name_index 
+		&& s_info->offset ){
+		return true;
+	}
+	
 	return false;
 }
 
