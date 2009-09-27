@@ -1,12 +1,9 @@
 #include <stdio.h>
 
-void hello(void)
-{
+main(void){
+#if 0
 	puts("hello");
-}
-
-
-main()
-{
+#else
 	while(1);
+#endif
 }

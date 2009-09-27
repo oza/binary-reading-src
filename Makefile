@@ -1,13 +1,15 @@
 GCC=gcc
 MAKE=make
 TARGET=elfparser
+
 TESTBIN=hello
+TESTCC=-entry main
 
 .PHONY : all test run clean 
 
 all:
 	$(MAKE) $(TARGET)
-	$(MAKE) test
+	$(MAKE) test 
 
 $(TARGET): $(TARGET).c
 	$(GCC) $< -o $@
@@ -18,11 +20,11 @@ run:
 test: 
 	$(MAKE) testbin
 	@echo "*** start to test... ***"
-	./$(TARGET) $(TESTBIN).o
+	./$(TARGET) $(TESTBIN)
 	@echo "*** finished test. ***"
 
 testbin: $(TESTBIN).c
-	$(GCC) $< -o $(TESTBIN).o
+	$(GCC) $< -o $(TESTBIN)
 
 clean:
-	rm -rf *.o $(TARGET)
+	rm -rf *.o $(TARGET) $(TESTBIN)
