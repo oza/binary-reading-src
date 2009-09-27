@@ -1,0 +1,35 @@
+** ファイルの内容 **
+.
+|-- Makefile            : ビルド用のMakefile
+|-- README              : このファイル
+|-- elfparser.c         : 今回作成するプログラム本体
+|-- elfparser.h         : 型定義がちょこちょこと書いてあるヘッダ
+`-- hello.c             : 解析対象のプログラムのソースコード. 
+
+** ビルド方法 **
+プロンプトにて、
+$ make 
+とうつと、
+1.elfparser.c がコンパイルされて実行バイナリ elfparser に、
+2.hello.c がコンパイルされて実行バイナリ hello に、
+なります. その後、 自動的に ./elfparser hello
+が実行されてバイナリhelloの解析を開始します.
+
+** 今回やって頂くこと **
+elfparser の主要関数である
+1.is_elf
+2.parse_elf_header
+3.parse_program_header
+4.parse_section_header
+を実装して頂きます.
+
+** 手順 **
+1.Cソースコード編集 
+2.make
+3.readelf して実行結果を確かめる
+といった手順になると思われます.
+
+** Extra問題 **
+1.parse_section_header のそれぞれの行に、シンボルテーブルから
+データを引っ張ってきてセクション名を表示させる.
+2.execute関数を実装して、helloのmain関数を実行できるようにする.
